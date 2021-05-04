@@ -215,7 +215,7 @@ By doing so, however we lose the older price information that was known for that
 ### Bi-Temporal Database
 Finally, a bi-temporal database would have access to both "record time" and "booking date" to filter on, during its version search phase. On such a database, we can ask questions like - "What was the price for booking date D₁ as it was known to the database at record time T₂? (Answer: P₁)". The data storage scheme is identical to the scheme presented in [Table 1](#flight-record).
 
-# Appendix: Beyond Bi-Temporal
+# Appendix A: Beyond Bi-Temporal
 Continuing with our projection-based representation model, we note that we needn't stop at just two dimensions. In fact this model can be extended to an arbitrary number of dimensions, and it is possible to design a database capable of storing and querying facts with _n_ temporal dimensions. However, beyond two dimensions, the semantic mappings quickly turn murky.
 
 [This](https://en.wikipedia.org/wiki/Temporal_database) Wikipedia article speaks of tri-temporal databases (with the 3rd temporal dimension being _decision time_), but the semantics of >2 dimensions seem to remain unclear, while also adding to our cognitive load. Even Snodgrass, et al, in their [1985 ACM SIGMOID paper](https://www.researchgate.net/publication/221212735_A_Taxonomy_of_Time_in_Databases), limited themselves to just the two dimensions discussed above, with every other time-like field being relegated to the category of _user-defined time_ (a polite way of saying "none of the DB's temporal business").
@@ -223,3 +223,6 @@ Continuing with our projection-based representation model, we note that we needn
 I think one way of understanding multiple temporal dimensions is to imagine each dimension as the _transaction time_ of some system - the first being the _transaction time_ of the database itself, the second, third.. and so on being _transaction times_ of external systems (including non-computer systems, such as record books, meeting minutes, journals, diaries, etc.) through which the data has traveled to reach our database, and the final being the _valid time_ dimension, i.e. the _transaction time_ of the real world itself, also known as the _clock time_ or _wall time_. Fact versions along all but the 1st dimension should be mutable.
 
 **Disclaimer:** I have not put this scheme to test. It is just a hypothesis that may or may not yield usable designs.
+
+# Appendix B: Parallel/Branching Realities
+Since we're discussing version control for data, it is natural to draw parallels with file-based version control, and ask how branching fits into the scheme. My take is that all the dimensions and fact versions taken together represent one version of reality. To spawn an alternate reality is to hatch a whole new set of _n_ dimensions and start recording fact versions from scratch there. In this grand scheme of things, a branch is nothing but a child reality that has been pre-populated with data from a parent reality.
