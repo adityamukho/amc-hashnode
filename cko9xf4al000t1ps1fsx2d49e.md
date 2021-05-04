@@ -38,9 +38,9 @@ Let us take a moment to try and visualize the two different approaches to storin
 <figcaption>Figure 1: Mutation history with 0 temporal dimensions.</figcaption>
 </figure>
 
-[Figure 1](#0-dim-mutations) is a abstract representation of what happens in a database where old data for an entity (row/document/key) is always overwritten by new data. The diagram shows the evolution of state through time of a single entity. On the timeline, each state that this entity has even been in is indicated by a box labelled _S₁_, _S₂_, _S₃_, etc.
+[Figure 1](#0-dim-mutations) is an abstract representation of what happens in a database where old data for an entity (row/document/key) is always overwritten by new data. The diagram shows the evolution of state through time of a single entity. On the timeline, each state that this entity has even been in is indicated by a box labelled _S₁_, _S₂_, _S₃_, etc.
 
-Even though from our perspective we can see each state in the diagram, the database only gets to see whatever is projected on the line labelled _Projection Hyperplane_, i.e., the latest recorded state. This imaginary hyperplane always crosses the timeline through the present instant, and hence acts as a marker of the present moment. Past states are inaccessible to the database. This is depicted in the figure by the projections of older states getting occluded by subsequent newer states.
+Even though from our perspective we can see historic states in the diagram, the database only gets to see whatever is projected on the line labelled _Projection Hyperplane_, i.e., the latest recorded state. This imaginary hyperplane always crosses the timeline through the present instant, and hence acts as a marker of the present moment. Past states are inaccessible to the database. This is depicted in the figure by the projections of older states getting occluded by subsequent newer states.
 
 We shall see shortly why this abstract representation is a useful tool in understanding temporality in databases.
 
@@ -63,25 +63,25 @@ An interesting property of our representational model is that it is not constrai
 <figcaption>Figure 3: Mutation history with 2 temporal dimensions. For an interactive, 3D version (where you get to rotate/zoom the drawing to see it from different angles), visit https://www.geogebra.org/m/ey3sky2s.</figcaption>
 </figure>
 
-Here, the states _S₁₁_,_S₁₂_, _S₂₁_, _S₃₁_, etc. all represent doubly-timestamped states of the same entity. The two temporal dimensions - _Time₁_ and _Time₂_ are laid orthogonal to each other as coordinate axes. The _Projection Hyperplane_ is now a 2-dimensional plane hovering above the bi-temporal coordinate plane.
+Here, the states _S₁₁_,_S₁₂_, _S₂₁_, _S₃₁_, etc. all represent doubly-timestamped historic states of the same entity. The two temporal dimensions - _Time₁_ and _Time₂_ are laid orthogonal to each other as coordinate axes. The _Projection Hyperplane_ is now a 2-dimensional plane hovering above the bi-temporal coordinate plane.
 
 Each state gets to project its presence onto the _Projection Hyperplane_, bounded below by the timestamps of its creation, and above by the timestamps of its respective successors along each temporal dimension. The last known states on each dimension get to project their presence to ∞ along that dimension. ∞ is represented by a dotted line crossing each axis.
 
 **Note:** The boxes on the bi-temporal coordinate plane, representing states at different tuples from the pair of temporal dimensions, would rarely be arranged in a perfectly aligned grid. In reality, they would be more likely scattered around seemingly haphazardly. The example in [Figure 3](2-dim-mutations) has adopted a less chaotic arrangement to try and simplify a rather complex diagram.
 
 # Putting it All Together
-We will now explore how these representational state plots map to data in the real world. For up to two time dimensions, the ideal mappings have already been extensively [researched](https://www.researchgate.net/publication/221212735_A_Taxonomy_of_Time_in_Databases) and widely [adopted](https://www.datasciencecentral.com/profiles/blogs/temporal-databases-why-you-should-care-and-how-to-get-started), and I will just reiterate the conventions already in use:
+We will now explore how these representational state plots map to data in the real world. For up to two time dimensions, the ideal mappings have already been extensively [researched](https://www.researchgate.net/publication/221212735_A_Taxonomy_of_Time_in_Databases) and widely [adopted](https://www.datasciencecentral.com/profiles/blogs/temporal-databases-why-you-should-care-and-how-to-get-started), and I will just reiterate here, the conventions already in use:
 
 1. A _transaction time_ dimension consists of values from a temporal field that tracks the actual time of recording a fact. This is the point of time in the real world when the fact was recorded into the database, and is often auto-filled by the database itself. This field (along with the associated state or event data) is best kept immutable to maintain the sanctity of the system of record.
 
-    It represents **what was known to the system at the time of record**, or **the truth, as it was best known at the time of record**. It is impossible for fact versions stored along the _transaction time_ dimension to be placed chronologically out of order.  They are always, by definition, inserted in real time.
+    It represents **what was known to the system at the time of record**, or **the truth, as it was best known at the time of record**. It is impossible for fact versions stored along the _transaction time_ dimension to be placed chronologically out of order. This is because they are ordered by their insertion timestamps.
 1. A _valid time_ dimension consists of values from a temporal field that tracks the **effective contextual time** of a fact, as it was known at the time of record. This is perhaps better explained by a few examples:
 
     i. If an employee joined an organization on the 5th of June, 2020, but their employment record was preemptively created on 3rd June 2020, then the former is a _valid time_ field and the latter is a _transaction time_ field. This is an instance of recording **before the fact**.
 
     ii. If a parcel got delivered to a customer at 12 PM, but the system was updated later at 2 PM to mark the delivery, then the former is the _valid time_ and the latter is the _transaction time_. This is an instance of recording **after the fact**.
 
-    iii. If a user places an order on an e-commerce portal, then the time of recording the order is itself considered to be the effective time of placing the order. In this case, the _transaction time_ and _valid time_ are always in sync. For cases like this, a bi-temporal representation can gracefully degenerate to a uni-temporal representation, and this is the case for all real-time systems.
+    iii. If a user places an order on an e-commerce portal, then the time of recording the order is itself considered to be the effective time of placing the order. In this case, the _transaction time_ and _valid time_ are always in sync. For cases like this, a bi-temporal representation can gracefully degenerate to a uni-temporal representation. In this post, we will refer to them as **actual-time systems**.
 
     A _valid time_ field (and its associated state or event data) is generally kept mutable, and is often updated to correct erroneous data entries or to consolidate conflicting inputs from multiple systems. Fact versions stored along the _valid time_ dimension may arrive preemptively, retroactively, or chronologically out of order w.r.t. each other.
 
@@ -101,7 +101,7 @@ Now, for a given flight, the following attributes would be required at the minim
 
 In our example, the booking date acts as the _valid time_ dimension, since the price point (mutable state) goes in and out of validity based on the booking date. The time of record must invariably serve as the _transaction time_ dimension for any sane use case.
 
-Any system that stores this flight information would have to record some or all of the above fields for each flight, along with a explicit or implicit time of record. Theoretically, something like the following has to happen:
+Any system that stores this flight information would have to record some or all of the above fields for each flight, along with a explicit or implicit time of record. In principle, something like the following has to be recorded:
 
 <table id="flight-record">
 <caption>Table 1: A tabular representation of versioned flight data</caption>
@@ -141,7 +141,7 @@ However, as we shall see, the actual mechanism (and therefore capabilities) of s
 **Note:** If you've gone through some of the literature referenced here or elsewhere on temporal dimensions in databases, you will have observed that both _transaction time_ and _valid time_ fields are marked using a pair of _start time_ and _end time_ values. This is implicitly handled in our example by marking only the start times explicitly, and assuming the end times either coincide with the start time of the next version or stretch to ∞.
 
 ### _Transaction Time_ Database
-A _transaction time_ database is an immutable system of versioning facts. A fact, once stored in such a database, is indelible for the lifetime of the system. In our example, both price and booking date are essential attributes of a flight, and so this database must store them both (along with a record date).
+A _transaction time_ database is an immutable system of versioning facts. A fact version, once stored in such a database, is indelible for the lifetime of the system. In our example, both price and booking date are essential attributes of a flight, and so this database must store them both (along with a record date).
 
 However, the fact that it is a uni-temporal, _transaction time_ database means that the "booking date" field is not available for use as a filter for the temporal version selection process. This could be due to the way it encodes its data for storage (storing deltas between versions instead of fully built state objects, for example).
 
@@ -175,12 +175,12 @@ However, the fact that it is a uni-temporal, _transaction time_ database means t
 
 In order to find the last known price for a given booking date, this system would have to scan its version record (in reverse) until it finds the first version with that booking date. This is obviously a highly inefficient system for this use case.
 
-A _transaction time_-based uni-temporal system is usually only useful in real-time (as defined above) cases where the _transaction time_ dimension doubles as the _valid time_ dimension. An example would be the booking management sub-system for an airline, since a booking, once made, is processed in real time for the span of its active lifecycle (booked -> minor changes like seat allocation, meals, etc. -> check-in -> security -> boarding -> destination).
+A _transaction time_-based uni-temporal system is usually only useful in _actual-time_ (as defined above) cases where the _transaction time_ dimension doubles as the _valid time_ dimension. An example would be the booking management sub-system for an airline, since a booking, once made, is processed in actual time (i.e., neither preemptively nor retroactively) for the span of its active lifecycle (booked -> minor changes like seat allocation, meals, etc. -> check-in -> security -> boarding -> destination).
 
 So, although a _transaction time_ database is useless for serving a catalog, it works just fine for live order management.
 
 ### _Valid Time_ Database
-A _valid time_ database is a mutable system of versioning facts. A fact stored here (along with its _valid_ timestamp) may be altered whenever new knowledge of the truth surfaces, and differs from the existing record. In our example, since the booking date is the _valid time_ dimension, the state stored against a particular booking date can be modified in-place.
+A _valid time_ database is a mutable system of versioning facts. A fact version stored here (along with its _valid_ timestamp) may be altered whenever new knowledge of the truth surfaces, and differs from the existing record. In our example, since the booking date is the _valid time_ dimension, the state stored against a particular booking date can be modified in-place.
 
 By doing so, however we lose the older price information that was known for that state. In order to find the last known price for a booking date, a simple filter on the booking date field would yield the required state.
 
@@ -213,7 +213,7 @@ By doing so, however we lose the older price information that was known for that
 </table>
 
 ### Bi-Temporal Database
-Finally, a bi-temporal database would have access to both "record time" and "booking date" to filter on, during its version search phase. On such a database, we can ask questions like - "What was the price for booking date D₁ as it was known to the database at record time T₂? (Answer: P₁)". The data storage scheme is represented in [Table 1](#flight-record).
+Finally, a bi-temporal database would have access to both "record time" and "booking date" to filter on, during its version search phase. On such a database, we can ask questions like - "What was the price for booking date D₁ as it was known to the database at record time T₂? (Answer: P₁)". The data storage scheme is identical to the scheme presented in [Table 1](#flight-record).
 
 # Appendix: Beyond Bi-Temporal
 Continuing with our projection-based representation model, we note that we needn't stop at just two dimensions. In fact this model can be extended to an arbitrary number of dimensions, and it is possible to design a database capable of storing and querying facts with _n_ temporal dimensions. However, beyond two dimensions, the semantic mappings quickly turn murky.
@@ -222,4 +222,4 @@ Continuing with our projection-based representation model, we note that we needn
 
 I think one way of understanding multiple temporal dimensions is to imagine each dimension as the _transaction time_ of some system - the first being the _transaction time_ of the database itself, the second, third.. and so on being _transaction times_ of external systems (including non-computer systems, such as record books, meeting minutes, journals, diaries, etc.) through which the data has traveled to reach our database, and the final being the _valid time_ dimension, i.e. the _transaction time_ of the real world itself, also known as the _clock time_ or _wall time_. Fact versions along all but the 1st dimension should be mutable.
 
-**Disclaimer:** I have not put this scheme to test, however. It is just a hypothesis that may or may not work out.
+**Disclaimer:** I have not put this scheme to test. It is just a hypothesis that may or may not yield usable designs.
