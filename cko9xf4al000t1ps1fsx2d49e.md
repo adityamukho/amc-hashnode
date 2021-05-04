@@ -31,7 +31,7 @@ It is the latter case (timestamped revisions using appended updates) that is the
 # Approaches to Time-Based Fact-Versioning
 Let us take a moment to try and visualize the two different approaches to storing and updating mutable facts that we've seen so far.
 
-## Case 0: 0 Temporal Dimensions
+## Case: 0 Temporal Dimensions
 
 <figure id="0-dim-mutations">
 ![0-dim-mutations.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1620017526391/zLKDZ4ykk.png)
@@ -44,7 +44,7 @@ Even though from our perspective we can see historic states in the diagram, the 
 
 We shall see shortly why this abstract representation is a useful tool in understanding temporality in databases.
 
-## Case 1: 1 Temporal Dimension
+## Case: 1 Temporal Dimension
 
 <figure id="1-dim-mutations">
 ![1-dim-mutations.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1620017613090/mLDjllYGn.png)
@@ -55,7 +55,7 @@ We shall see shortly why this abstract representation is a useful tool in unders
 
 **A note on implementation specifics:** The visible temporal axis may be implemented as an internal database feature, or as part of explicit schema design (visible to the application layer), or as schema-transparent middleware residing in the persistence layer. In all cases, the concepts explored in this post remain the same.
 
-## Case 2: 2 Temporal Dimensions
+## Case: 2 Temporal Dimensions
 An interesting property of our representational model is that it is not constrained to just one temporal field or temporal dimension. By simply adding another temporal dimension to the diagram, (and to the hyperplane), we can now track object revisions using two temporal fields instead of one. We will shortly see whether this makes any sense in a real-world context, but for now, [Figure 3](2-dim-mutations) presents an example of a bi-temporal projection.
 
 <figure id="2-dim-mutations">
