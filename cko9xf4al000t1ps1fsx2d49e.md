@@ -1,7 +1,7 @@
 ## Exploring Temporality in Databases
 
 # Getting Started with Time
-Time is of some importance to humans. The best scientific minds have yet to unravel all its mysteries. Even its definition is a recurring subject of debate. Yet, we all innately have a sense of what time is. It would be hard to discuss any subject at length without any reference to the aspect of time. It is a fundamental component of all knowledge. In fact, it is a fundamental component of language itself - try constructing a contextually self-contained sentence without a single verb.
+Time is of some importance to humans. The best scientific minds have yet to unravel all its mysteries. Even its definition is a recurring subject of debate. Yet, we all innately have a sense of what time is. It would be hard to discuss any subject at length without reference to the aspect of time. It is a fundamental component of all knowledge. In fact, it is a fundamental component of language itself - try constructing a contextually self-contained sentence without a single verb.
 
 It is evident that in all accessories we've devised to store and dispense knowledge, time has always been a deeply integrated, first-class citizen. Databases are no exception. It is not uncommon to see a time-like field associated with a fact stored in a database. 
 
