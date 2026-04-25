@@ -9,6 +9,8 @@ tags: version-control, graph-database
 
 ---
 
+**Update (2026):** the thinking in this post is now carried forward in [Minigraf](https://github.com/project-minigraf/minigraf)
+
 A webinar recording of RecallGraph, where I discuss its roadmap, adoption and development efforts. Apologies in advance for the occasional drop in quality.
 
 %[https://www.youtube.com/watch?v=A953O3hT1Os]
