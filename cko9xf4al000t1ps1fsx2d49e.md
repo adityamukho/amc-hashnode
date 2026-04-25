@@ -1,4 +1,12 @@
-## Exploring Temporality in Databases
+---
+title: "Exploring Temporality in Databases"
+seoDescription: "A deep-dive into the concepts behind time-traveling databases that are capable of version-controlling their data."
+datePublished: 2021-05-04T11:06:26.193Z
+cuid: cko9xf4al000t1ps1fsx2d49e
+slug: exploring-temporality-in-databases
+tags: databases, versioning, time
+
+---
 
 # Getting Started with Time
 Time is of some importance to humans. The best scientific minds have yet to unravel all its mysteries. Even its definition is a recurring subject of debate. Yet, we all innately have a sense of what time is. It would be hard to discuss any subject at length without reference to the aspect of time. It is a fundamental component of all knowledge. In fact, it is a fundamental component of language itself - try constructing a contextually self-contained sentence without a single verb.
