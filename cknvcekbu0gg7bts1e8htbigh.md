@@ -1,4 +1,13 @@
-## A Closer Look at Delta Arithmetic
+---
+title: "A Closer Look at Delta Arithmetic"
+seoDescription: "Delta arithmetic, introduced in 1996 in ACM Transactions on Database Systems, required even today for implementing version-control in database systems."
+datePublished: 2019-06-30T18:30:00.000Z
+cuid: cknvcekbu0gg7bts1e8htbigh
+slug: a-closer-look-at-delta-arithmetic
+canonical: https://adityamukho.com/a-closer-look-at-delta-arithmetic/
+tags: version-control, graph-database
+
+---
 
 In their [1996 paper published in ACM Transactions on Database Systems](https://www.seas.upenn.edu/~zives/03s/cis650/P370.PDF), Ghandeharizadeh et al. defined a formal algebra around _Deltas_ (the encoded difference between any two states of a system) in a relational database. Their definition is actually generic enough to apply to any system whose state can be represented as a set of tuples, which is why it is still used in contemporary research on database versioning, including those involving non-relational data models (Khurana et al. [Storing and Analyzing Historical Graph Data at Scale](https://www.researchgate.net/publication/282403421_Storing_and_Analyzing_Historical_Graph_Data_at_Scale)). In order to support my deep dives into a couple of modern designs that use _Delta Arithmetic_ for versioning graph databases, I will spend some time in this post laying down its foundations, clarifying a few under-explained points along the way.
 
