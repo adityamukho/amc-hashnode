@@ -1,4 +1,13 @@
-## Exploring Graph Database Versioning Approaches
+---
+title: "Exploring Graph Database Versioning Approaches"
+seoDescription: "Exploring a hypothetical KV store as a backend for a historical graph database."
+datePublished: 2019-06-27T18:30:00.000Z
+cuid: cknvf367j0hcrass13no3cwx1
+slug: exploring-graph-database-versioning-approaches
+canonical: https://adityamukho.com/exploring-graph-database-versioning-approaches-part-1/
+tags: version-control, graph-database
+
+---
 
 Building on my [previous post](/the-case-for-versioned-graph-databases/), where I emphasize the need for versioned graph databases, I explore a few of the possible approaches to designing one. This is not a ground-up approach that delves into the design of the database engine itself, but rather an _overlay_ approach that can let us run version control atop any standard graph database.
 
