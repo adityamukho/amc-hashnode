@@ -1,4 +1,13 @@
-## The Case for Versioned Graph Databases
+---
+title: "The Case for Versioned Graph Databases"
+seoDescription: "Why versioned graph databases are a necessity in today's database landscape."
+datePublished: 2019-06-27T18:30:00.000Z
+cuid: cknvfbsmm0h1lbts1f3jw754p
+slug: the-case-for-versioned-graph-databases
+canonical: https://adityamukho.com/the-case-for-versioned-graph-databases/
+tags: version-control, graph-database
+
+---
 
 ## Why Graph Databases?
 Graph databases have become ubiquitous over the years due to their incredible representational and querying capabilities, when it comes to highly interconnected data. Wherever data has an inherent networked structure, graph databases fare better at storing and querying that data than other NoSQL databases as well as relational databases, because they naturally persist the underlying connected structure. This allows for traversal semantics in declarative graph query languages, and also, better performance than SQL - especially for deep traversals. Additionally, they often help unravel emergent network topologies in legacy data, that had not previously been mined for such structures. At the very least, they make the process a lot less tedious.
