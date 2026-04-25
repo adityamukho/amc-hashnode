@@ -1,4 +1,14 @@
-## Introducing CivicGraph
+---
+title: "Introducing CivicGraph"
+seoTitle: "CivicGraph - A versioning data store for time-variant graph data."
+seoDescription: "CivicGraph is a versioned-graph data store - it retains all changes that its data (vertices and edges) have gone through to reach their current state."
+datePublished: 2020-01-31T18:30:00.000Z
+cuid: cknvbicm60gq4ass15xxvaqeu
+slug: introducing-civicgraph
+canonical: https://adityamukho.com/civicgraph-a-versioning-data-store-for-time-variant-graph-data/
+tags: version-control, graph-database
+
+---
 
 I would like to introduce an open source, Apache 2.0 licensed project of mine:
  
